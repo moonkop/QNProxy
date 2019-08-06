@@ -26,7 +26,7 @@ wsClient.on('connection',
             }else{
                 console.log('server 未连接');
             }
-        });//当收到消息时，在控制台打印出来，并回复一条信息
+        });
     });
 
 wsServer.on('connection',function connection(ws){
@@ -36,6 +36,6 @@ wsServer.on('connection',function connection(ws){
         console.log('wsServer: %s',message);
         message = JSON.parse(message);
         wsClients[message.client].send(JSON.stringify(message));
-    });//当收到消息时，在控制台打印出来，并回复一条信息
+    });
 });
 
