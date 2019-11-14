@@ -15,9 +15,9 @@ let wsServerInst = undefined;
 wsClient.on('connection',
     function connection(ws){
         let clientId = currentClientID;
-        clientId++
+        currentClientID++
         wsClients[clientId] = ws;
-        console.log(' wsClient connected',ws,clientId);
+        console.log(' wsClient connected',clientId);
         ws.on('message',function incoming(message){
             console.log('wsClient: %s',message);
             let request = buildRequest(clientId,message);
@@ -31,11 +31,12 @@ wsClient.on('connection',
 
 wsServer.on('connection',function connection(ws){
     wsServerInst = ws;
-    console.log('wsServer connected',wsServerInst);
+    console.log('wsServer connected');
     ws.on('message',function incoming(message){
-        console.log('wsServer: %s',message);
+        console.log('wsServer: incoming');
         message = JSON.parse(message);
         wsClients[message.client].send(JSON.stringify(message));
     });
 });
+
 
